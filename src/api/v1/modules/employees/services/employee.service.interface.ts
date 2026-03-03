@@ -8,4 +8,5 @@ export interface IEmployeeService {
     deleteEmployee(id: string): Promise<void>;
     getEmployeeById(id: string): Promise<IEmployeeEntity>;
     getAllEmployees(query: IQueryParams): Promise<{ data: IEmployeeEntity[]; total: number; page: number; limit: number }>;
+    updateEmptyNames(): Promise<number>;
 }

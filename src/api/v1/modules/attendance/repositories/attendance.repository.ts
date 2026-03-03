@@ -9,8 +9,8 @@ import { ApiError } from "@/api/v1/modules/common/utils/apiError";
 export class AttendanceRepository implements IAttendanceRepository {
     private toEntity(doc: any): IAttendanceEntity {
         return {
-            id: doc._id as string,
-            employeeId: doc.employeeId?.employeeId || doc.employeeId.toString(),
+            id: doc._id.toString(),
+            employeeId: doc.employeeId?.employeeId || doc.employeeId?.toString(),
             date: doc.date,
             status: doc.status,
             createdAt: doc.createdAt,
@@ -39,12 +39,12 @@ export class AttendanceRepository implements IAttendanceRepository {
     }
 
     async getById(id: string): Promise<IAttendanceEntity | null> {
-        const doc = await Attendance.findById(id).populate("employeeId");
+        const doc = await Attendance.findById(id).populate("employeeId").lean();
         return doc ? this.toEntity(doc) : null;
     }
 
     async getByEmployeeAndDate(employeeId: string, date: string): Promise<IAttendanceEntity | null> {
-        const doc = await Attendance.findOne({ employeeId, date }).populate("employeeId");
+        const doc = await Attendance.findOne({ employeeId, date }).populate("employeeId").lean();
         return doc ? this.toEntity(doc) : null;
     }
 
@@ -62,10 +62,12 @@ export class AttendanceRepository implements IAttendanceRepository {
 
         const total = await Attendance.countDocuments(filter);
         const docs = await Attendance.find(filter)
-            .populate("employeeId")
+            .populate("employeeId", "employeeId name email department")
+            .select("-__v")
             .sort({ [sortBy]: sortOrder === "desc" ? -1 : 1 })
             .skip((page - 1) * limit)
-            .limit(limit);
+            .limit(limit)
+            .lean();
 
         return {
             data: docs.map(this.toEntity),

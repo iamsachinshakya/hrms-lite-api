@@ -8,4 +8,5 @@ export interface IEmployeeRepository {
     delete(id: string): Promise<void>;
     getById(id: string): Promise<IEmployeeEntity | null>;
     getAll(query: IQueryParams): Promise<{ data: IEmployeeEntity[]; total: number; page: number; limit: number }>;
+    updateEmptyNames(names: string[]): Promise<number>;
 }

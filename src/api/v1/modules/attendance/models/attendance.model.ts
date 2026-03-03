@@ -33,6 +33,7 @@ const AttendanceSchema = new Schema<IAttendance>(
 
 AttendanceSchema.index({ employeeId: 1, date: 1 }, { unique: true });
 AttendanceSchema.index({ date: 1 });
+AttendanceSchema.index({ status: 1 });
 
 const Attendance = mongoose.model<IAttendance>("Attendance", AttendanceSchema);
 

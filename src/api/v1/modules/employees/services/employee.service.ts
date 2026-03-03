@@ -5,6 +5,7 @@ import { IEmployeeEntity } from "@/api/v1/modules/employees/models/employee.enti
 import { ICreateEmployee, IUpdateEmployee } from "@/api/v1/modules/employees/models/employee.dto";
 import { IQueryParams } from "@/api/v1/modules/common/models/common.dto";
 import { ApiError } from "@/api/v1/modules/common/utils/apiError";
+import { getRandomName, RANDOM_NAMES } from "@/api/v1/modules/common/utils/name.utils";
 
 export class EmployeeService implements IEmployeeService {
     constructor(
@@ -13,6 +14,9 @@ export class EmployeeService implements IEmployeeService {
     ) { }
 
     async createEmployee(data: ICreateEmployee): Promise<IEmployeeEntity> {
+        if (!data.name || data.name.trim() === "") {
+            data.name = getRandomName();
+        }
         if (!data.joinDate) {
             data.joinDate = new Date().toISOString().split("T")[0];
         }
@@ -41,5 +45,9 @@ export class EmployeeService implements IEmployeeService {
 
     async getAllEmployees(query: IQueryParams): Promise<{ data: IEmployeeEntity[]; total: number; page: number; limit: number }> {
         return this.employeeRepository.getAll(query);
+    }
+
+    async updateEmptyNames(): Promise<number> {
+        return this.employeeRepository.updateEmptyNames(RANDOM_NAMES);
     }
 }

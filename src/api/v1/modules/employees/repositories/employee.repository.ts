@@ -7,9 +7,9 @@ import { IQueryParams } from "@/api/v1/modules/common/models/common.dto";
 import { ApiError } from "@/api/v1/modules/common/utils/apiError";
 
 export class EmployeeRepository implements IEmployeeRepository {
-    private toEntity(doc: IEmployee): IEmployeeEntity {
+    private toEntity(doc: any): IEmployeeEntity {
         return {
-            id: doc.id,
+            id: doc._id.toString(),
             employeeId: doc.employeeId,
             name: doc.name,
             email: doc.email,
@@ -38,8 +38,8 @@ export class EmployeeRepository implements IEmployeeRepository {
     }
 
     async getById(id: string): Promise<IEmployeeEntity | null> {
-        const doc = await Employee.findOne({ $or: [{ _id: mongoose.isValidObjectId(id) ? id : null }, { employeeId: id }] });
-        return doc ? this.toEntity(doc) : null;
+        const doc = await Employee.findOne({ $or: [{ _id: mongoose.isValidObjectId(id) ? id : null }, { employeeId: id }] }).lean();
+        return doc ? this.toEntity(doc as any) : null;
     }
 
     async getAll(query: IQueryParams): Promise<{ data: IEmployeeEntity[]; total: number; page: number; limit: number }> {
@@ -48,9 +48,11 @@ export class EmployeeRepository implements IEmployeeRepository {
 
         const total = await Employee.countDocuments(filter);
         const docs = await Employee.find(filter)
+            .select("-__v")
             .sort({ [sortBy]: sortOrder === "desc" ? -1 : 1 })
             .skip((page - 1) * limit)
-            .limit(limit);
+            .limit(limit)
+            .lean();
 
         return {
             data: docs.map(this.toEntity),
@@ -58,5 +60,19 @@ export class EmployeeRepository implements IEmployeeRepository {
             page,
             limit,
         };
+    }
+
+    async updateEmptyNames(names: string[]): Promise<number> {
+        const filter = { $or: [{ name: { $exists: false } }, { name: null }, { name: "" }, { name: "Unnamed Employee" }] };
+        const employees = await Employee.find(filter);
+        let updatedCount = 0;
+
+        for (const emp of employees) {
+            const randomName = names[Math.floor(Math.random() * names.length)];
+            await Employee.updateOne({ _id: emp._id }, { $set: { name: randomName } });
+            updatedCount++;
+        }
+
+        return updatedCount;
     }
 }
