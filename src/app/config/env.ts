@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Environment, LogLevel } from "./constants";
+import { Environment, LogLevel } from "@/app/config/constants";
 
 // Define & validate environment schema
 const envSchema = z.object({

@@ -1,8 +1,8 @@
-import app from "./app/app";
-import { Environment } from "./app/config/constants";
-import { env } from "./app/config/env";
-import { connectDB } from "./app/db/mongodb/connectDB";
-import logger from "./app/utils/logger";
+import app from "@/app/app";
+import { Environment } from "@/app/config/constants";
+import { env } from "@/app/config/env";
+import { connectDB } from "@/app/db/mongodb/connectDB";
+import logger from "@/app/utils/logger";
 
 let initPromise: Promise<void> | null = null;
 

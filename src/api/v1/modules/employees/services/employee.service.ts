@@ -1,9 +1,9 @@
-import { IEmployeeService } from "./employee.service.interface";
-import { IEmployeeRepository } from "../repositories/employee.repository.interface";
-import { IEmployeeEntity } from "../models/employee.entity";
-import { ICreateEmployee, IUpdateEmployee } from "../models/employee.dto";
-import { IQueryParams } from "../../common/models/common.dto";
-import { ApiError } from "../../common/utils/apiError";
+import { IEmployeeService } from "@/api/v1/modules/employees/services/employee.service.interface";
+import { IEmployeeRepository } from "@/api/v1/modules/employees/repositories/employee.repository.interface";
+import { IEmployeeEntity } from "@/api/v1/modules/employees/models/employee.entity";
+import { ICreateEmployee, IUpdateEmployee } from "@/api/v1/modules/employees/models/employee.dto";
+import { IQueryParams } from "@/api/v1/modules/common/models/common.dto";
+import { ApiError } from "@/api/v1/modules/common/utils/apiError";
 
 export class EmployeeService implements IEmployeeService {
     constructor(private readonly employeeRepository: IEmployeeRepository) { }

@@ -3,13 +3,13 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-import { stream } from "./utils/logger";
-import { env, isDevelopment } from "./config/env";
-import { ApiError } from "../api/v1/modules/common/utils/apiError";
-import { errorMiddleware } from "../api/v1/modules/common/middlewares/error.middleware";
-import { ApiResponse } from "../api/v1/modules/common/utils/apiResponse";
-import { employeeRouter } from "../api/v1/modules/employees/routes/employee.routes";
-import { attendanceRouter } from "../api/v1/modules/attendance/routes/attendance.routes";
+import { stream } from "@/app/utils/logger";
+import { env, isDevelopment } from "@/app/config/env";
+import { ApiError } from "@/api/v1/modules/common/utils/apiError";
+import { errorMiddleware } from "@/api/v1/modules/common/middlewares/error.middleware";
+import { ApiResponse } from "@/api/v1/modules/common/utils/apiResponse";
+import { employeeRouter } from "@/api/v1/modules/employees/routes/employee.routes";
+import { attendanceRouter } from "@/api/v1/modules/attendance/routes/attendance.routes";
 
 const app = express();
 

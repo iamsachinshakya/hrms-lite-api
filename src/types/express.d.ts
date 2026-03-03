@@ -1,4 +1,4 @@
-import { IEmployeeEntity } from "../api/v1/modules/employees/models/employee.entity";
+import { IEmployeeEntity } from "@/api/v1/modules/employees/models/employee.entity";
 
 declare global {
     namespace Express {

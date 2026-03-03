@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { env } from "../../config/env";
-import logger from "../../utils/logger";
+import { env } from "@/app/config/env";
+import logger from "@/app/utils/logger";
 
 /**
  * Global cache to prevent multiple connections

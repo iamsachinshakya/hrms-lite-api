@@ -1,9 +1,9 @@
-import { IEmployeeRepository } from "./employee.repository.interface";
-import Employee, { IEmployee } from "../models/employee.model";
-import { IEmployeeEntity } from "../models/employee.entity";
-import { ICreateEmployee, IUpdateEmployee } from "../models/employee.dto";
-import { IQueryParams } from "../../common/models/common.dto";
-import { ApiError } from "../../common/utils/apiError";
+import { IEmployeeRepository } from "@/api/v1/modules/employees/repositories/employee.repository.interface";
+import Employee, { IEmployee } from "@/api/v1/modules/employees/models/employee.model";
+import { IEmployeeEntity } from "@/api/v1/modules/employees/models/employee.entity";
+import { ICreateEmployee, IUpdateEmployee } from "@/api/v1/modules/employees/models/employee.dto";
+import { IQueryParams } from "@/api/v1/modules/common/models/common.dto";
+import { ApiError } from "@/api/v1/modules/common/utils/apiError";
 
 export class EmployeeRepository implements IEmployeeRepository {
     private toEntity(doc: IEmployee): IEmployeeEntity {

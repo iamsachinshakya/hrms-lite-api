@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { AttendanceController } from "../controllers/attendance.controller";
-import { AttendanceService } from "../services/attendance.service";
-import { AttendanceRepository } from "../repositories/attendance.repository";
-import { asyncHandler } from "../../common/utils/asyncHandler";
+import { AttendanceController } from "@/api/v1/modules/attendance/controllers/attendance.controller";
+import { AttendanceService } from "@/api/v1/modules/attendance/services/attendance.service";
+import { AttendanceRepository } from "@/api/v1/modules/attendance/repositories/attendance.repository";
+import { asyncHandler } from "@/api/v1/modules/common/utils/asyncHandler";
 
 const router = Router();
 

@@ -1,7 +1,7 @@
 import { createLogger, format, transports, Logger } from "winston";
 import winston from "winston";
-import { LogLevel } from "../config/constants";
-import { isDevelopment } from "../config/env";
+import { LogLevel } from "@/app/config/constants";
+import { isDevelopment } from "@/app/config/env";
 
 // ---- Winston log levels ----
 const levels = {

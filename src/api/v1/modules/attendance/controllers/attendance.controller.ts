@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { IAttendanceService } from "../services/attendance.service.interface";
-import { ApiResponse } from "../../common/utils/apiResponse";
-import { PAGINATION_PAGE_LIMIT } from "../../common/constants/constants";
-import { ICreateAttendance, IUpdateAttendance } from "../models/attendance.dto";
-import { IQueryParams } from "../../common/models/common.dto";
+import { IAttendanceService } from "@/api/v1/modules/attendance/services/attendance.service.interface";
+import { ApiResponse } from "@/api/v1/modules/common/utils/apiResponse";
+import { PAGINATION_PAGE_LIMIT } from "@/api/v1/modules/common/constants/constants";
+import { ICreateAttendance, IUpdateAttendance } from "@/api/v1/modules/attendance/models/attendance.dto";
+import { IQueryParams } from "@/api/v1/modules/common/models/common.dto";
 
 export class AttendanceController {
     constructor(private readonly attendanceService: IAttendanceService) { }

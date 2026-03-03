@@ -1,4 +1,4 @@
-import { ErrorCode } from "../constants/errorCodes";
+import { ErrorCode } from "@/api/v1/modules/common/constants/errorCodes";
 
 /**
  * Custom error class for handling operational (expected) errors gracefully.

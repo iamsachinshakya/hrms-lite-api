@@ -1,9 +1,9 @@
-import { IAttendanceRepository } from "./attendance.repository.interface";
-import Attendance, { IAttendance } from "../models/attendance.model";
-import { IAttendanceEntity } from "../models/attendance.entity";
-import { ICreateAttendance, IUpdateAttendance } from "../models/attendance.dto";
-import { IQueryParams } from "../../common/models/common.dto";
-import { ApiError } from "../../common/utils/apiError";
+import { IAttendanceRepository } from "@/api/v1/modules/attendance/repositories/attendance.repository.interface";
+import Attendance, { IAttendance } from "@/api/v1/modules/attendance/models/attendance.model";
+import { IAttendanceEntity } from "@/api/v1/modules/attendance/models/attendance.entity";
+import { ICreateAttendance, IUpdateAttendance } from "@/api/v1/modules/attendance/models/attendance.dto";
+import { IQueryParams } from "@/api/v1/modules/common/models/common.dto";
+import { ApiError } from "@/api/v1/modules/common/utils/apiError";
 
 export class AttendanceRepository implements IAttendanceRepository {
     private toEntity(doc: IAttendance): IAttendanceEntity {

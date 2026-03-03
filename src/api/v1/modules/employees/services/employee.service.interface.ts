@@ -1,6 +1,6 @@
-import { IEmployeeEntity } from "../models/employee.entity";
-import { ICreateEmployee, IUpdateEmployee } from "../models/employee.dto";
-import { IQueryParams } from "../../common/models/common.dto";
+import { IEmployeeEntity } from "@/api/v1/modules/employees/models/employee.entity";
+import { ICreateEmployee, IUpdateEmployee } from "@/api/v1/modules/employees/models/employee.dto";
+import { IQueryParams } from "@/api/v1/modules/common/models/common.dto";
 
 export interface IEmployeeService {
     createEmployee(data: ICreateEmployee): Promise<IEmployeeEntity>;

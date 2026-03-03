@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only --env-file=.env src/index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register --env-file=.env src/index.ts",
     "build": "tsc",
     "start": "pnpm build && node --env-file=.env dist/index.js",
     "lint": "eslint . --ext .ts"
@@ -36,6 +36,7 @@
     "eslint-config-prettier": "link:prettier\\eslint-config-prettier",
     "eslint-plugin-prettier": "^5.5.4",
     "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3"
   }
 }

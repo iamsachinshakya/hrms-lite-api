@@ -1,4 +1,4 @@
-import { IAttendanceEntity } from "./attendance.entity";
+import { IAttendanceEntity } from "@/api/v1/modules/attendance/models/attendance.entity";
 
 export interface ICreateAttendance extends Omit<IAttendanceEntity, "id" | "createdAt" | "updatedAt"> { }
 export interface IUpdateAttendance extends Partial<Omit<ICreateAttendance, "employeeId" | "date">> { }

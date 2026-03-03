@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { EmployeeController } from "../controllers/employee.controller";
-import { EmployeeService } from "../services/employee.service";
-import { EmployeeRepository } from "../repositories/employee.repository";
-import { asyncHandler } from "../../common/utils/asyncHandler";
+import { EmployeeController } from "@/api/v1/modules/employees/controllers/employee.controller";
+import { EmployeeService } from "@/api/v1/modules/employees/services/employee.service";
+import { EmployeeRepository } from "@/api/v1/modules/employees/repositories/employee.repository";
+import { asyncHandler } from "@/api/v1/modules/common/utils/asyncHandler";
 
 const router = Router();
 

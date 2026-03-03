@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { IEmployeeService } from "../services/employee.service.interface";
-import { ApiResponse } from "../../common/utils/apiResponse";
-import { PAGINATION_PAGE_LIMIT } from "../../common/constants/constants";
-import { ICreateEmployee, IUpdateEmployee } from "../models/employee.dto";
-import { IQueryParams } from "../../common/models/common.dto";
+import { IEmployeeService } from "@/api/v1/modules/employees/services/employee.service.interface";
+import { ApiResponse } from "@/api/v1/modules/common/utils/apiResponse";
+import { PAGINATION_PAGE_LIMIT } from "@/api/v1/modules/common/constants/constants";
+import { ICreateEmployee, IUpdateEmployee } from "@/api/v1/modules/employees/models/employee.dto";
+import { IQueryParams } from "@/api/v1/modules/common/models/common.dto";
 
 export interface IEmployeeController {
     create(req: Request, res: Response): Promise<Response>;

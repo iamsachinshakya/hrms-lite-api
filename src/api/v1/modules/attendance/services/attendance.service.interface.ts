@@ -1,6 +1,6 @@
-import { IAttendanceEntity } from "../models/attendance.entity";
-import { ICreateAttendance, IUpdateAttendance } from "../models/attendance.dto";
-import { IQueryParams } from "../../common/models/common.dto";
+import { IAttendanceEntity } from "@/api/v1/modules/attendance/models/attendance.entity";
+import { ICreateAttendance, IUpdateAttendance } from "@/api/v1/modules/attendance/models/attendance.dto";
+import { IQueryParams } from "@/api/v1/modules/common/models/common.dto";
 
 export interface IAttendanceService {
     markAttendance(data: ICreateAttendance): Promise<IAttendanceEntity>;

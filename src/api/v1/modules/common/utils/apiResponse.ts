@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { ErrorCode } from "../constants/errorCodes";
+import { ErrorCode } from "@/api/v1/modules/common/constants/errorCodes";
 
 /**
  * Standard API response helper for consistent response structure.
