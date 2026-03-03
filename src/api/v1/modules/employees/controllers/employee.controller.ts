@@ -17,8 +17,7 @@ export class EmployeeController implements IEmployeeController {
     constructor(private readonly employeeService: IEmployeeService) { }
 
     async create(req: Request, res: Response): Promise<Response> {
-        const { id, ...data } = req.body;
-        const employee = await this.employeeService.createEmployee({ ...data, employeeId: id });
+        const employee = await this.employeeService.createEmployee(req.body);
         const { employeeId, id: mongoId, ...rest } = employee;
         return ApiResponse.success(res, "Employee created", { id: employeeId, ...rest }, 201);
     }
