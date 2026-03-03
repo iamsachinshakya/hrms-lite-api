@@ -10,31 +10,31 @@ export class AttendanceController {
 
     async mark(req: Request, res: Response): Promise<Response> {
         const data: ICreateAttendance = req.body;
-        const attendance = await this.attendanceService.markAttendance(data);
-        return ApiResponse.success(res, "Attendance marked successfully", attendance, 201);
-    }
-
-    async update(req: Request, res: Response): Promise<Response> {
-        const { id } = req.params;
-        const data: IUpdateAttendance = req.body;
-        const attendance = await this.attendanceService.updateAttendance(id, data);
-        return ApiResponse.success(res, "Attendance updated successfully", attendance);
+        const attendance = await this.attendanceService.markAttendance(req.body);
+        return ApiResponse.success(res, "Attendance marked", attendance, 201);
     }
 
     async getById(req: Request, res: Response): Promise<Response> {
-        const { id } = req.params;
-        const attendance = await this.attendanceService.getAttendanceById(id);
-        return ApiResponse.success(res, "Attendance record fetched successfully", attendance);
+        const attendance = await this.attendanceService.getAttendanceById(req.params.id);
+        return ApiResponse.success(res, "Attendance record found", attendance);
+    }
+
+    async update(req: Request, res: Response): Promise<Response> {
+        const attendance = await this.attendanceService.updateAttendance(req.params.id, req.body);
+        return ApiResponse.success(res, "Attendance updated", attendance);
+    }
+
+    async getAll(req: Request, res: Response): Promise<Response> {
+        const result = await this.attendanceService.getAllAttendance(req.query as any);
+        return ApiResponse.success(res, "Attendance records retrieved", result.data, 200, {
+            total: result.total,
+            page: result.page,
+            limit: result.limit,
+        });
     }
 
     async getEmployeeAttendance(req: Request, res: Response): Promise<Response> {
-        const { employeeId } = req.params;
-        const query: IQueryParams = {
-            page: Number(req.query.page) || 1,
-            limit: Number(req.query.limit) || PAGINATION_PAGE_LIMIT,
-        };
-
-        const result = await this.attendanceService.getEmployeeAttendance(employeeId, query);
-        return ApiResponse.success(res, "Employee attendance fetched successfully", result);
+        const result = await this.attendanceService.getEmployeeAttendance(req.params.employeeId, req.query as any);
+        return ApiResponse.success(res, "Employee attendance retrieved", result.data, 200, { total: result.total });
     }
 }

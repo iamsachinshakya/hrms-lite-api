@@ -7,4 +7,5 @@ export interface IAttendanceService {
     updateAttendance(id: string, data: IUpdateAttendance): Promise<IAttendanceEntity>;
     getAttendanceById(id: string): Promise<IAttendanceEntity>;
     getEmployeeAttendance(employeeId: string, query: IQueryParams): Promise<{ data: IAttendanceEntity[]; total: number }>;
+    getAllAttendance(query: IQueryParams): Promise<{ data: IAttendanceEntity[]; total: number; page: number; limit: number }>;
 }

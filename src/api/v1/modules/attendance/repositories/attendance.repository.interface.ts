@@ -7,5 +7,6 @@ export interface IAttendanceRepository {
     update(id: string, data: IUpdateAttendance): Promise<IAttendanceEntity>;
     getById(id: string): Promise<IAttendanceEntity | null>;
     getByEmployeeAndDate(employeeId: string, date: string): Promise<IAttendanceEntity | null>;
+    deleteByEmployeeId(employeeId: string): Promise<void>;
     getAll(query: IQueryParams): Promise<{ data: IAttendanceEntity[]; total: number; page: number; limit: number }>;
 }

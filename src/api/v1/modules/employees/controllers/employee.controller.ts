@@ -17,40 +17,45 @@ export class EmployeeController implements IEmployeeController {
     constructor(private readonly employeeService: IEmployeeService) { }
 
     async create(req: Request, res: Response): Promise<Response> {
-        const data: ICreateEmployee = req.body;
-        const employee = await this.employeeService.createEmployee(data);
-        return ApiResponse.success(res, "Employee created successfully", employee, 201);
+        const { id, ...data } = req.body;
+        const employee = await this.employeeService.createEmployee({ ...data, employeeId: id });
+        const { employeeId, id: mongoId, ...rest } = employee;
+        return ApiResponse.success(res, "Employee created", { id: employeeId, ...rest }, 201);
     }
 
     async update(req: Request, res: Response): Promise<Response> {
-        const { id } = req.params;
-        const data: IUpdateEmployee = req.body;
-        const employee = await this.employeeService.updateEmployee(id, data);
-        return ApiResponse.success(res, "Employee updated successfully", employee);
+        const employee = await this.employeeService.updateEmployee(req.params.id, req.body);
+        const { employeeId, id, ...rest } = employee;
+        return ApiResponse.success(res, "Employee updated", { id: employeeId, ...rest });
     }
 
     async delete(req: Request, res: Response): Promise<Response> {
-        const { id } = req.params;
-        await this.employeeService.deleteEmployee(id);
-        return ApiResponse.success(res, "Employee deleted successfully", null, 204);
+        await this.employeeService.deleteEmployee(req.params.id);
+        return ApiResponse.success(res, `Employee ${req.params.id} deleted`);
     }
 
     async getById(req: Request, res: Response): Promise<Response> {
-        const { id } = req.params;
-        const employee = await this.employeeService.getEmployeeById(id);
-        return ApiResponse.success(res, "Employee fetched successfully", employee);
+        const employee = await this.employeeService.getEmployeeById(req.params.id);
+        const { employeeId, id, ...rest } = employee;
+        return ApiResponse.success(res, "Employee found", { id: employeeId, ...rest });
     }
 
     async getAll(req: Request, res: Response): Promise<Response> {
         const query: IQueryParams = {
             page: Number(req.query.page) || 1,
             limit: Number(req.query.limit) || PAGINATION_PAGE_LIMIT,
-            search: (req.query.search as string) || "",
-            sortBy: (req.query.sortBy as string) || "createdAt",
-            sortOrder: (req.query.sortOrder as "asc" | "desc") || "desc",
+            search: req.query.search as string,
+            sortBy: req.query.sortBy as string,
+            sortOrder: req.query.sortOrder as "asc" | "desc",
         };
 
         const result = await this.employeeService.getAllEmployees(query);
-        return ApiResponse.success(res, "Employees fetched successfully", result);
+        const mappedData = result.data.map(({ employeeId, id, ...rest }) => ({ id: employeeId, ...rest }));
+
+        return ApiResponse.success(res, "Employees retrieved", mappedData, 200, {
+            total: result.total,
+            page: result.page,
+            limit: result.limit,
+        });
     }
 }

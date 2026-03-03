@@ -16,6 +16,10 @@ export interface IQueryParams {
     search?: string;
     sortBy?: string;
     sortOrder?: "asc" | "desc";
+    employeeId?: string;
+    status?: string;
+    from?: string;
+    to?: string;
 }
 
 export interface PaginatedData<T> {

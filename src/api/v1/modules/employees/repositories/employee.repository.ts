@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { IEmployeeRepository } from "@/api/v1/modules/employees/repositories/employee.repository.interface";
 import Employee, { IEmployee } from "@/api/v1/modules/employees/models/employee.model";
 import { IEmployeeEntity } from "@/api/v1/modules/employees/models/employee.entity";
@@ -8,7 +9,8 @@ import { ApiError } from "@/api/v1/modules/common/utils/apiError";
 export class EmployeeRepository implements IEmployeeRepository {
     private toEntity(doc: IEmployee): IEmployeeEntity {
         return {
-            id: doc._id as string,
+            id: doc.id,
+            employeeId: doc.employeeId,
             name: doc.name,
             email: doc.email,
             department: doc.department,
@@ -30,11 +32,13 @@ export class EmployeeRepository implements IEmployeeRepository {
     }
 
     async delete(id: string): Promise<void> {
-        await Employee.findByIdAndDelete(id);
+        // Try id as ObjectId first, then as employeeId
+        const doc = await Employee.findOne({ $or: [{ _id: mongoose.isValidObjectId(id) ? id : null }, { employeeId: id }] });
+        if (doc) await Employee.deleteOne({ _id: doc._id });
     }
 
     async getById(id: string): Promise<IEmployeeEntity | null> {
-        const doc = await Employee.findById(id);
+        const doc = await Employee.findOne({ $or: [{ _id: mongoose.isValidObjectId(id) ? id : null }, { employeeId: id }] });
         return doc ? this.toEntity(doc) : null;
     }
 

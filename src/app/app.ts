@@ -10,6 +10,7 @@ import { errorMiddleware } from "@/api/v1/modules/common/middlewares/error.middl
 import { ApiResponse } from "@/api/v1/modules/common/utils/apiResponse";
 import { employeeRouter } from "@/api/v1/modules/employees/routes/employee.routes";
 import { attendanceRouter } from "@/api/v1/modules/attendance/routes/attendance.routes";
+import { statsRouter } from "@/api/v1/modules/stats/routes/stats.routes";
 
 const app = express();
 
@@ -38,8 +39,9 @@ app.get("/", (_req: Request, res: Response) => {
 /**
  * API routes
  */
-app.use("/api/v1/employees", employeeRouter);
-app.use("/api/v1/attendance", attendanceRouter);
+app.use("/api/employees", employeeRouter);
+app.use("/api/attendance", attendanceRouter);
+app.use("/api/stats", statsRouter);
 
 /**
  * 404 handler

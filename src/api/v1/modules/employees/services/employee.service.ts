@@ -1,14 +1,21 @@
 import { IEmployeeService } from "@/api/v1/modules/employees/services/employee.service.interface";
 import { IEmployeeRepository } from "@/api/v1/modules/employees/repositories/employee.repository.interface";
+import { IAttendanceRepository } from "@/api/v1/modules/attendance/repositories/attendance.repository.interface";
 import { IEmployeeEntity } from "@/api/v1/modules/employees/models/employee.entity";
 import { ICreateEmployee, IUpdateEmployee } from "@/api/v1/modules/employees/models/employee.dto";
 import { IQueryParams } from "@/api/v1/modules/common/models/common.dto";
 import { ApiError } from "@/api/v1/modules/common/utils/apiError";
 
 export class EmployeeService implements IEmployeeService {
-    constructor(private readonly employeeRepository: IEmployeeRepository) { }
+    constructor(
+        private readonly employeeRepository: IEmployeeRepository,
+        private readonly attendanceRepository: IAttendanceRepository
+    ) { }
 
     async createEmployee(data: ICreateEmployee): Promise<IEmployeeEntity> {
+        if (!data.joinDate) {
+            data.joinDate = new Date().toISOString().split("T")[0];
+        }
         return this.employeeRepository.create(data);
     }
 
@@ -17,7 +24,13 @@ export class EmployeeService implements IEmployeeService {
     }
 
     async deleteEmployee(id: string): Promise<void> {
-        await this.employeeRepository.delete(id);
+        const employee = await this.employeeRepository.getById(id);
+        if (!employee) throw new ApiError("Employee not found", 404);
+
+        // Cascade delete attendance records
+        await this.attendanceRepository.deleteByEmployeeId(employee.id);
+
+        return this.employeeRepository.delete(id);
     }
 
     async getEmployeeById(id: string): Promise<IEmployeeEntity> {
