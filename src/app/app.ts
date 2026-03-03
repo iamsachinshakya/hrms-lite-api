@@ -39,9 +39,9 @@ app.get("/", (_req: Request, res: Response) => {
 /**
  * API routes
  */
-app.use("/api/employees", employeeRouter);
-app.use("/api/attendance", attendanceRouter);
-app.use("/api/stats", statsRouter);
+app.use("/api/v1/employees", employeeRouter);
+app.use("/api/v1/attendance", attendanceRouter);
+app.use("/api/v1/stats", statsRouter);
 
 /**
  * 404 handler
