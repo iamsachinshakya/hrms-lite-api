@@ -9,7 +9,7 @@ const envSchema = z.object({
         .string()
         .regex(/^\d+$/, { message: "PORT must be a number" })
         .default("5000"),
-    CORS_ORIGIN: z.string(),
+    CORS_ORIGIN: z.string().default("4000"),
 
     // Database
     MONGODB_URI: z.string(),
