@@ -8,7 +8,8 @@ import { env, isDevelopment } from "./config/env";
 import { ApiError } from "../api/v1/modules/common/utils/apiError";
 import { errorMiddleware } from "../api/v1/modules/common/middlewares/error.middleware";
 import { ApiResponse } from "../api/v1/modules/common/utils/apiResponse";
-import { userRouter } from "../api/v1/modules/users/routes/user.routes";
+import { employeeRouter } from "../api/v1/modules/employees/routes/employee.routes";
+import { attendanceRouter } from "../api/v1/modules/attendance/routes/attendance.routes";
 
 const app = express();
 
@@ -31,13 +32,14 @@ app.use(cookieParser());
  * Health check
  */
 app.get("/", (_req: Request, res: Response) => {
-    ApiResponse.success(res, "🚀 Users Express server running!");
+    ApiResponse.success(res, "🚀 HRMS Express server running!");
 });
 
 /**
  * API routes
  */
-// app.use("/api/v1/users", userRouter);
+app.use("/api/v1/employees", employeeRouter);
+app.use("/api/v1/attendance", attendanceRouter);
 
 /**
  * 404 handler
