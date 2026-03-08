@@ -8,6 +8,7 @@ import { ErrorCode } from "@/api/v1/modules/common/constants/errorCodes";
 
 /**
  * Global error-handling middleware for Express
+ * 
  */
 export const errorMiddleware = (
   err: unknown,
